@@ -1,9 +1,9 @@
-const db = require('../models/index.js');
+const db = require('./index.js');
 const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
 const Reviews = sequelize.define('reviews', {
-  id: { type: Sequelize.INTEGER, primaryKey: true },
+  review_id: { type: Sequelize.INTEGER, primaryKey: true },
   product_id: Sequelize.INTEGER,
   rating: Sequelize.INTEGER,
   date: Sequelize.STRING,
@@ -11,8 +11,8 @@ const Reviews = sequelize.define('reviews', {
   body: Sequelize.TEXT,
   recommend: Sequelize.STRING(10),
   reported: Sequelize.STRING(10),
-  name: Sequelize.STRING,
-  email: Sequelize.STRING,
+  reviewer_name: Sequelize.STRING,
+  reviewer_email: Sequelize.STRING,
   response: Sequelize.TEXT,
   helpfulness: Sequelize.INTEGER
 });
@@ -48,10 +48,10 @@ const Char_reviews = sequelize.define('char_reviews', {
   value: Sequelize.INTEGER
 });
 
-Reviews.sync();
-Photos.sync();
-Char_reviews.sync();
-Characteristics.sync();
+// Reviews.sync();
+// Photos.sync();
+// Char_reviews.sync();
+// Characteristics.sync();
 
 exports.Reviews = Reviews;
 exports.Photos = Photos;
