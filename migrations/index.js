@@ -8,8 +8,8 @@ const db = mysql.createConnection({
 db.connect(function (err) {
   if (err) { throw err; }
   console.log('Connected!');
-  db.query('USE SDC_database', (err, result) => {
-    console.log('Using SDC Database');
+  db.query('USE SDC_review', (err, result) => {
+    console.log('Using SDC Review Database');
   });
 
   const photos = `LOAD DATA LOCAL INFILE './csv/reviews_photos.csv' INTO TABLE photos 
@@ -36,25 +36,25 @@ db.connect(function (err) {
   LINES TERMINATED BY '\n' 
   IGNORE 1 ROWS `;
 
-  // db.query(photos, (err, result) => {
-  //   if (err) throw err;
-  //   console.log('Migrate photos data success');
-  // })
+  db.query(reviews, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate reviews data success');
+  });
 
-  // db.query(reviews, (err, result) => {
-  //   if (err) throw err;
-  //   console.log('Migrate reviews data success');
-  // })
+  db.query(photos, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate photos data success');
+  });
 
-  // db.query(characteristics, (err, result) => {
-  //   if (err) throw err;
-  //   console.log('Migrate characteristics data success');
-  // })
+  db.query(characteristics, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics data success');
+  });
 
-  // db.query(charReviews, (err, result) => {
-  //   if (err) throw err;
-  //   console.log('Migrate characteristics reviews data success');
-  // })
+  db.query(charReviews, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics reviews data success');
+  });
 
 });
 
