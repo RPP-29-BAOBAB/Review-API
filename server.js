@@ -1,7 +1,10 @@
 const express = require('express');
 const router = require('./router');
 const app = express();
+const bodyParser = require('body-parser');
 
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Review API');
@@ -14,23 +17,33 @@ app.get('/reviews', (req, res) => {
 });
 
 app.get('/reviews/meta', (req, res) => {
-  res.status(200);
-  res.end();
+  router.getMeta(req, (data) => {
+    res.status(200);
+    res.end();
+  });
 });
 
 app.post('/reviews', (req, res) => {
-  res.status(201);
-  res.end();
+  router.postReview(req, () => {
+    res.status(201);
+    res.end();
+  });
 });
 
-app.put('/reviews/:product_id/helpful', (req, res) => {
-  res.status(204);
-  res.end();
+app.put('/reviews/:review_id/helpful', (req, res) => {
+  router.putHelpful(req, () => {
+    console.log('add helpful success');
+    res.status(204);
+    res.end();
+  });
 });
 
-app.put('/reviews/:product_id/report', (req, res) => {
-  res.status(204);
-  res.end();
+app.put('/reviews/:review_id/report', (req, res) => {
+  router.putReport(req, () => {
+    console.log('reported');
+    res.status(204);
+    res.end();
+  });
 });
 
 module.exports = app;

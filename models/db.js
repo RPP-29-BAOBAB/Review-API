@@ -3,7 +3,7 @@ const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
 const Reviews = sequelize.define('reviews', {
-  review_id: { type: Sequelize.INTEGER, primaryKey: true },
+  review_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
   product_id: Sequelize.INTEGER,
   rating: Sequelize.INTEGER,
   date: Sequelize.STRING,
