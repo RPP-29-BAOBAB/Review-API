@@ -19,7 +19,7 @@ app.get('/reviews', (req, res) => {
 app.get('/reviews/meta', (req, res) => {
   router.getMeta(req, (data) => {
     res.status(200);
-    res.end();
+    res.json(data);
   });
 });
 

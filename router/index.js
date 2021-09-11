@@ -12,7 +12,8 @@ const getPhotos = async (reviewId, callback) => {
   })
     .then((photos) => {
       callback(photos);
-    });
+    })
+    .catch(err => console.log(err));
 };
 
 const getReviews = (req, res) => {
@@ -28,16 +29,21 @@ const getReviews = (req, res) => {
     attributes: { exclude: ['createdAt', 'updatedAt', 'product_id', 'reviewer_email'] }
   })
     .then(async (reviewsData) => {
-      for (let i = 0; i < count; i++) {
+      for (let i = 0; i < reviewsData.length; i++) {
         const review = reviewsData[i];
         const reviewId = review.review_id;
+        review.response = review.response === 'null' ? null : review.response;
         await getPhotos(reviewId, (photos) => {
           review.photos = photos;
           responseReviews.results.push(review);
         });
+        if (responseReviews.results.length === count) {
+          return;
+        }
       }
       res(responseReviews);
-    });
+    })
+    .catch(err => console.log(err));
 };
 
 const getMeta = async (req, res) => {
@@ -55,18 +61,16 @@ const getMeta = async (req, res) => {
     attributes: ['rating', 'recommend']
   })
     .then(data => {
-      console.log('rating & recommend', rating, data);
       for (let i = 0; i < data.length; i++) {
         const rate = data[i].rating;
         const recom = data[i].recommend;
         rating[rate] ? rating[rate]++ : rating[rate] = 1;
         recommend[recom] ? recommend[recom]++ : recommend[recom] = 1;
-
       }
       resMeta.ratings = rating;
       resMeta.recommended = recommend;
-      res();
-    });
+    })
+    .catch((err) => console.log(err));
 
   await Characteristics.findAll({
     where: { product_id: productId },
@@ -89,10 +93,13 @@ const getMeta = async (req, res) => {
             average = (sum / allValue.length).toFixed(1);
             characteristics[each.name].value = average;
 
-          });
+          })
+          .catch(err => console.log(err));
       }
       resMeta.characteristics = characteristics;
-    });
+    })
+    .catch(err => console.log(err));
+  console.log('meta', resMeta);
   res(resMeta);
 };
 
@@ -205,7 +212,7 @@ const postReview = async (req, res) => {
     reviewer_name: name,
     reviewer_email: email,
     photos,
-    response: '',
+    response: null,
     reported: 'false',
     helpfulness: 0
   })
@@ -223,7 +230,7 @@ const postReview = async (req, res) => {
           .then(data => console.log(data.get({ plain: true }), result));
       }
     });
-  
+
   res();
 };
 
