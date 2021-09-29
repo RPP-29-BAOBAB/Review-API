@@ -4,6 +4,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
   host: 'reviewdb.c5hcyqd19uub.us-east-2.rds.amazonaws.com',
   user: 'admin',
+  database: 'sdc_review',
   password: '123456789'
 });
 
