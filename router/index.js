@@ -1,6 +1,9 @@
+const e = require('express');
 const { findAll } = require('sequelize/lib/model');
 const { report } = require('superagent');
 const { Reviews, Photos, Characteristics, Char_reviews } = require('../models/db.js');
+
+const cache = {};
 
 
 const getPhotos = async (reviewId, callback) => {
@@ -41,9 +44,11 @@ const getReviews = (req, res) => {
           return;
         }
       }
+      cache[product_id] = responseReviews.results;
       res(responseReviews);
     })
     .catch(err => console.log(err));
+
 };
 
 const getMeta = async (req, res) => {

@@ -3,7 +3,7 @@ const Sequelize = db.Sequelize;
 const sequelize = db.sequelize;
 
 const Reviews = sequelize.define('reviews', {
-  review_id: { type: Sequelize.INTEGER, primaryKey: true, autoIncrement: true },
+  review_id: { type: Sequelize.INTEGER, primaryKey: true },
   product_id: Sequelize.INTEGER,
   rating: Sequelize.INTEGER,
   date: Sequelize.STRING,
@@ -15,7 +15,9 @@ const Reviews = sequelize.define('reviews', {
   reviewer_email: Sequelize.STRING,
   response: Sequelize.TEXT,
   helpfulness: Sequelize.INTEGER
-});
+},
+{indexes: [{name: 'product_id_index', unique: 'false', fields: ['product_id']}]}
+);
 
 const Photos = sequelize.define('photos', {
   id: {
@@ -25,7 +27,9 @@ const Photos = sequelize.define('photos', {
   },
   review_id: Sequelize.INTEGER,
   url: Sequelize.STRING
-});
+},
+{indexes: [{name: 'review_id_index', unique: 'false', fields: ['review_id']}]}
+);
 
 const Characteristics = sequelize.define('characteristics', {
   id: {
@@ -47,11 +51,6 @@ const Char_reviews = sequelize.define('char_reviews', {
   review_id: Sequelize.INTEGER,
   value: Sequelize.INTEGER
 });
-
-// Reviews.sync();
-// Photos.sync();
-// Char_reviews.sync();
-// Characteristics.sync();
 
 exports.Reviews = Reviews;
 exports.Photos = Photos;

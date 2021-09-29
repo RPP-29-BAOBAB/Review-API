@@ -1,8 +1,6 @@
 const mysql = require('mysql');
 
 
-
-
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -44,20 +42,20 @@ db.connect(function (err) {
     console.log('Migrate reviews data success');
   });
 
-  // db.query(photos, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate photos data success');
-  // });
+  db.query(photos, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate photos data success');
+  });
 
-  // db.query(characteristics, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate characteristics data success');
-  // });
+  db.query(characteristics, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics data success');
+  });
 
-  // db.query(charReviews, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate characteristics reviews data success');
-  // });
+  db.query(charReviews, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics reviews data success');
+  });
 
 });
 
