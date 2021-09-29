@@ -1,6 +1,6 @@
 const e = require('express');
-const { findAll } = require('sequelize/lib/model');
-const { report } = require('superagent');
+// const { findAll } = require('sequelize/lib/model');
+// const { report } = require('superagent');
 const { Reviews, Photos, Characteristics, Char_reviews } = require('../models/db.js');
 
 const cache = {};
