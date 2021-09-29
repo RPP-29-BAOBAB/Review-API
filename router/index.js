@@ -1,10 +1,4 @@
-const e = require('express');
-// const { findAll } = require('sequelize/lib/model');
-// const { report } = require('superagent');
-const Reviews = require('../models/db.js');
-const Photos = require('../models/db.js');
-const Characteristics = require('../models/db.js');
-const Char_reviews = require('../models/db.js');
+const { Reviews, Photos, Characteristics, Char_reviews } = require('../models/db.js');
 
 const cache = {};
 
