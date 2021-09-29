@@ -7,7 +7,7 @@ const sequelize = new Sequelize(config.database, config.username, config.passwor
 sequelize
   .authenticate()
   .then(() => {
-    console.info('Conected to SDC_review database');
+    console.log('Conected to SDC_review database');
   })
   .catch((err) => {
     console.error('ERROR - Unable to connect to the database:', err);

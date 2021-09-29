@@ -12,6 +12,7 @@ app.get('/', (req, res) => {
 
 app.get('/reviews', (req, res) => {
   router.getReviews(req, (data) => {
+    res.status(200);
     res.json(data);
   });
 });

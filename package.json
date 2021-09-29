@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=SDC jest --detectOpenHandles --testTimeout=10000 --coverage",
+    "k6": "k6 run ./test/script.js",
     "start": "nodemon app.js",
-    "db": "node ./models/db.js",
+    "createDb": "node ./models/createDb.js",
     "migration": "node ./migrations"
   },
   "repository": {
