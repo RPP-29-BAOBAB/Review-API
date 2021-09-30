@@ -9,7 +9,7 @@ import http from 'k6/http';
 // };
 
 export let options = {
-  vus: 1000,
+  vus: 100,
   duration: '30s',
 };
 
