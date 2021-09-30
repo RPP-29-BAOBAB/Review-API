@@ -2,6 +2,7 @@ const express = require('express');
 const router = require('./router');
 const app = express();
 const bodyParser = require('body-parser');
+const path = require('path');
 
 
 app.use(bodyParser.json());
@@ -45,6 +46,10 @@ app.put('/reviews/:review_id/report', (req, res) => {
     res.status(204);
     res.end();
   });
+});
+
+app.get('/loaderio-93311e08750478d82cf6053c66396f6a.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, 'loaderio-93311e08750478d82cf6053c66396f6a.txt'));
 });
 
 module.exports = app;
