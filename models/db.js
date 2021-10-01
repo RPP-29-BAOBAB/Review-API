@@ -15,8 +15,8 @@ const Reviews = sequelize.define('reviews', {
   reviewer_email: Sequelize.STRING,
   response: Sequelize.TEXT,
   helpfulness: Sequelize.INTEGER,
-  created_at: Sequelize.DATE,
-  updated_at: Sequelize.DATE,
+  createdAt: Sequelize.DATE,
+  updatedAt: Sequelize.DATE,
 },
 // {indexes: [{name: 'product_id_index', unique: 'false', fields: ['product_id']}]}
 );
