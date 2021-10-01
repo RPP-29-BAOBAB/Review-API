@@ -17,7 +17,7 @@ const Reviews = sequelize.define('reviews', {
   helpfulness: Sequelize.INTEGER
 }
 );
-// {indexes: [{name: 'product_id_index', unique: 'false', fields: ['product_id']}]}
+
 
 const Photos = sequelize.define('photos', {
   id: {
@@ -29,7 +29,7 @@ const Photos = sequelize.define('photos', {
   url: Sequelize.STRING
 }
 );
-// {indexes: [{name: 'review_id_index', unique: 'false', fields: ['review_id']}]}
+
 
 const Characteristics = sequelize.define('characteristics', {
   id: {
