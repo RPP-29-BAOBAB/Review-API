@@ -1,12 +1,8 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
+const config = require('../config/config.json');
 
 
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  database: 'sdc_review',
-  password: '123456789'
-});
+const db = mysql.createConnection(config.migration);
 
 db.connect(function (err) {
   if (err) { throw err; }
@@ -39,25 +35,25 @@ db.connect(function (err) {
   LINES TERMINATED BY '\n' 
   IGNORE 1 ROWS `;
 
-  db.query(reviews, (err, result) => {
-    if (err) { throw err; }
-    console.log('Migrate reviews data success');
-  });
+  // db.query(reviews, (err, result) => {
+  //   if (err) { throw err; }
+  //   console.log('Migrate reviews data success');
+  // });
 
-  db.query(photos, (err, result) => {
-    if (err) { throw err; }
-    console.log('Migrate photos data success');
-  });
+  // db.query(photos, (err, result) => {
+  //   if (err) { throw err; }
+  //   console.log('Migrate photos data success');
+  // });
 
-  db.query(characteristics, (err, result) => {
-    if (err) { throw err; }
-    console.log('Migrate characteristics data success');
-  });
+  // db.query(characteristics, (err, result) => {
+  //   if (err) { throw err; }
+  //   console.log('Migrate characteristics data success');
+  // });
 
-  db.query(charReviews, (err, result) => {
-    if (err) { throw err; }
-    console.log('Migrate characteristics reviews data success');
-  });
+  // db.query(charReviews, (err, result) => {
+  //   if (err) { throw err; }
+  //   console.log('Migrate characteristics reviews data success');
+  // });
 
 });
 
