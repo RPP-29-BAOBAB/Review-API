@@ -1,8 +1,14 @@
-const mysql = require('mysql2');
+const mysql = require('mysql');
 const config = require('../config/config.json');
 
-
-const db = mysql.createConnection(config.migration);
+const production = config.production;
+const db = mysql.createConnection({
+  user: production.username,
+  password: production.password,
+  host: production.host,
+  database: production.database,
+  dialect: production.dialect
+});
 
 db.connect(function (err) {
   if (err) { throw err; }
@@ -11,13 +17,17 @@ db.connect(function (err) {
     console.log('Using SDC Review Database');
   });
 
-  const photos = `LOAD DATA LOCAL INFILE './csv/reviews_photos.csv' INTO TABLE photos 
+  const enableInfile = 'SET GLOBAL local_infile=1';
+
+  const photos = `
+  LOAD DATA LOCAL INFILE './csv/reviews_photos.csv' INTO TABLE photos 
   FIELDS TERMINATED BY ',' 
   ENCLOSED BY '"' 
   LINES TERMINATED BY '\n' 
   IGNORE 1 ROWS `;
 
-  const reviews = `LOAD DATA LOCAL INFILE './csv/reviews.csv' INTO TABLE reviews 
+  const reviews = `
+  LOAD DATA LOCAL INFILE './csv/reviews.csv' INTO TABLE reviews 
   FIELDS TERMINATED BY ',' 
   ENCLOSED BY '"' 
   LINES TERMINATED BY '\n' 
@@ -35,25 +45,31 @@ db.connect(function (err) {
   LINES TERMINATED BY '\n' 
   IGNORE 1 ROWS `;
 
-  // db.query(reviews, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate reviews data success');
-  // });
 
-  // db.query(photos, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate photos data success');
-  // });
+  db.query(enableInfile, (err, result) => {
+    if (err) { throw err; }
+    console.log('enable infile');
+  });
+ 
+  db.query(reviews, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate reviews data success');
+  });
 
-  // db.query(characteristics, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate characteristics data success');
-  // });
+  db.query(photos, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate photos data success');
+  });
 
-  // db.query(charReviews, (err, result) => {
-  //   if (err) { throw err; }
-  //   console.log('Migrate characteristics reviews data success');
-  // });
+  db.query(characteristics, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics data success');
+  });
+
+  db.query(charReviews, (err, result) => {
+    if (err) { throw err; }
+    console.log('Migrate characteristics reviews data success');
+  });
 
 });
 
