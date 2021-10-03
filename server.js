@@ -48,8 +48,8 @@ app.put('/reviews/:review_id/report', (req, res) => {
   });
 });
 
-app.get('/loaderio-93311e08750478d82cf6053c66396f6a.txt', (req, res) => {
-  res.sendFile(path.join(__dirname, 'loaderio-93311e08750478d82cf6053c66396f6a.txt'));
+app.get('/oaderio-9a9fcac65ef08fb013defe1558d2f616.txt', (req, res) => {
+  res.sendFile(path.join(__dirname, 'loaderio-9a9fcac65ef08fb013defe1558d2f616.txt.txt'));
 });
 
 module.exports = app;
