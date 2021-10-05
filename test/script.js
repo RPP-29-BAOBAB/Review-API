@@ -1,17 +1,17 @@
 import { check } from 'k6';
 import http from 'k6/http';
 
-// export let options = {
-//   stages: [
-//     {duration: '5s', target: 300},
-//     {duration: '1m', target: 300}
-//   ]
-// };
-
 export let options = {
-  vus: 100,
-  duration: '30s',
+  stages: [
+    {duration: '5s', target: 300},
+    {duration: '1m', target: 300}
+  ]
 };
+
+// export let options = {
+//   vus: 100,
+//   duration: '30s',
+// };
 
 const getRandomId = () => {
   return Math.floor(Math.random() * (1000000 - 900000) + 900000);
