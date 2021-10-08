@@ -24,33 +24,29 @@ const getReviews = (req, res) => {
     count: count || 5,
     results: []
   };
-  if (reviewsCache[product_id]) {
-    responseReviews.results = reviewsCache[product_id];
-    res(responseReviews);
-  } else {
-    Reviews.findAll({
-      where: { product_id: product_id },
-      attributes: { exclude: ['createdAt', 'updatedAt', 'product_id', 'reviewer_email'] }
+  Reviews.findAll({
+    where: { product_id: product_id },
+    attributes: { exclude: ['createdAt', 'updatedAt', 'product_id', 'reviewer_email'] }
+  })
+    .then(async (reviewsData) => {
+      for (let i = 0; i < reviewsData.length; i++) {
+        const review = reviewsData[i];
+        const reviewId = review.review_id;
+        review.date = new Date(Number(review.date));
+        review.response = review.response === 'null' ? null : review.response;
+        await getPhotos(reviewId, (photos) => {
+          review.photos = photos;
+          responseReviews.results.push(review);
+        });
+        // if (responseReviews.results.length === count) {
+        //   return;
+        // }
+      }
+      reviewsCache[product_id] = responseReviews.results;
+      res(responseReviews);
     })
-      .then(async (reviewsData) => {
-        for (let i = 0; i < reviewsData.length; i++) {
-          const review = reviewsData[i];
-          const reviewId = review.review_id;
-          review.date = new Date(Number(review.date));
-          review.response = review.response === 'null' ? null : review.response;
-          await getPhotos(reviewId, (photos) => {
-            review.photos = photos;
-            responseReviews.results.push(review);
-          });
-          if (responseReviews.results.length === count) {
-            return;
-          }
-        }
-        reviewsCache[product_id] = responseReviews.results;
-        res(responseReviews);
-      })
-      .catch(err => console.log(err));
-  }
+    .catch(err => console.log(err));
+
 
 
 };
